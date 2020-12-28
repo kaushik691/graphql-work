@@ -1,4 +1,6 @@
-import { GraphQLInt, GraphQLObjectType, GraphQLSchema } from 'graphql'
+import { GraphQLInt, GraphQLObjectType, GraphQLSchema, GraphQLString } from 'graphql'
+
+let counter = 42
 
 let schema = new GraphQLSchema({
     query: new GraphQLObjectType({
@@ -6,7 +8,21 @@ let schema = new GraphQLSchema({
         fields: () => ({
             counter: {
                 type: GraphQLInt,
-                resolve: () => 42
+                resolve: () => counter
+            },
+            message: {
+                type: GraphQLString,
+                resolve: () => "Hello GraphQL!"
+            }
+        })
+    }),
+
+    mutation: new GraphQLObjectType({
+        name: 'Mutation',
+        fields: () => ({
+            incrementCounter: {
+                type: GraphQLInt,
+                resolve: () => ++counter
             }
         })
     })
